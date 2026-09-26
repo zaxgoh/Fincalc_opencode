@@ -1,7 +1,8 @@
 import { ArrowRight, Check, Landmark, TrendingUp } from "lucide-react";
+import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,13 +17,14 @@ const features = [
     icon: Landmark,
     title: "Mortgage Repayments Calculator",
     description:
-      "Find your real monthly cost, and see exactly how much of every payment goes to the bank rather than back to you.",
+      "Find your real repayment, and see exactly how much of every payment goes to the bank rather than back to you.",
     points: [
-      "Monthly repayment for any rate and term",
-      "Full amortisation schedule, month by month",
-      "Interest vs principal split on each payment",
-      "Total interest repaid across the whole term",
+      "Weekly, fortnightly or monthly repayments",
+      "Principal & interest, or interest-only",
+      "Total interest over the life of the loan",
+      "Year-by-year amortisation schedule",
     ],
+    href: "/mortgage-repayments-calculator",
   },
   {
     icon: TrendingUp,
@@ -55,14 +57,10 @@ export default function Home() {
         </p>
 
         <div className="flex flex-col items-center gap-4">
-          <Button
-            size="lg"
-            nativeButton={false}
-            render={<a href="#calculators" />}
-          >
+          <a href="#calculators" className={buttonVariants({ size: "lg" })}>
             Explore the calculators
             <ArrowRight data-icon="inline-end" />
-          </Button>
+          </a>
           <p className="text-sm text-muted-foreground">
             No sign-up. Nothing leaves your browser.
           </p>
@@ -78,12 +76,13 @@ export default function Home() {
             Two calculators, one clear picture
           </h2>
           <p className="mx-auto max-w-2xl text-pretty text-muted-foreground">
-            Both are on the way. Here&apos;s what each one will do for you.
+            The mortgage calculator is ready to use. The compound interest
+            calculator is on the way.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {features.map(({ icon: Icon, title, description, points }) => (
+          {features.map(({ icon: Icon, title, description, points, href }) => (
             <Card key={title}>
               <CardHeader>
                 <CardTitle
@@ -112,7 +111,14 @@ export default function Home() {
               </CardContent>
 
               <CardFooter>
-                <Badge variant="outline">Coming soon</Badge>
+                {href ? (
+                  <Link href={href} className={buttonVariants()}>
+                    Open calculator
+                    <ArrowRight data-icon="inline-end" />
+                  </Link>
+                ) : (
+                  <Badge variant="outline">Coming soon</Badge>
+                )}
               </CardFooter>
             </Card>
           ))}
