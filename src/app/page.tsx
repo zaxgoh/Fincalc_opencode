@@ -37,6 +37,7 @@ const features = [
       "Compare compounding frequency side by side",
       "Total contributed vs total interest earned",
     ],
+    href: "/compound-interest-calculator",
   },
 ];
 
@@ -76,8 +77,8 @@ export default function Home() {
             Two calculators, one clear picture
           </h2>
           <p className="mx-auto max-w-2xl text-pretty text-muted-foreground">
-            The mortgage calculator is ready to use. The compound interest
-            calculator is on the way.
+            Work out what a mortgage costs you, then see what the same
+            discipline does for your savings. Both update as you type.
           </p>
         </div>
 
@@ -111,14 +112,10 @@ export default function Home() {
               </CardContent>
 
               <CardFooter>
-                {href ? (
-                  <Link href={href} className={buttonVariants()}>
-                    Open calculator
-                    <ArrowRight data-icon="inline-end" />
-                  </Link>
-                ) : (
-                  <Badge variant="outline">Coming soon</Badge>
-                )}
+                <Link href={href} className={buttonVariants()}>
+                  Open calculator
+                  <ArrowRight data-icon="inline-end" />
+                </Link>
               </CardFooter>
             </Card>
           ))}

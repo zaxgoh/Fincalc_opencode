@@ -13,7 +13,8 @@ import {
   type RepaymentFrequency,
   type RepaymentType,
 } from "@/lib/calculations/mortgage";
-import { formatCurrency, formatPercent } from "@/lib/format";
+import { formatCurrency, formatPercent, formatShare } from "@/lib/format";
+import { parseNumeric } from "@/lib/parse";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
@@ -74,16 +75,6 @@ function isRepaymentFrequency(value: string): value is RepaymentFrequency {
 
 function isRepaymentType(value: string): value is RepaymentType {
   return value in REPAYMENT_TYPES;
-}
-
-/**
- * Tolerant numeric parsing: strips currency symbols, separators and stray
- * spaces so a pasted "$400,000" still works, while returning NaN for input
- * that is not a number at all so the field can be flagged invalid.
- */
-function parseNumeric(raw: string): number {
-  const parsed = Number.parseFloat(raw.replace(/[^0-9.]/g, ""));
-  return Number.isFinite(parsed) ? parsed : Number.NaN;
 }
 
 export function MortgageRepaymentCalculator() {
@@ -340,8 +331,8 @@ export function MortgageRepaymentCalculator() {
                 {!result.interestOnly && result.totalRepaid > 0 ? (
                   <p className="text-sm text-muted-foreground">
                     Interest accounts for{" "}
-                    {formatPercent(result.totalInterest / result.totalRepaid)}{" "}
-                    of everything you pay. The final {periodLabel}ly payment can
+                    {formatShare(result.totalInterest / result.totalRepaid)} of
+                    everything you pay. The final {periodLabel}ly payment can
                     differ by a few cents to clear the balance exactly.
                   </p>
                 ) : null}
